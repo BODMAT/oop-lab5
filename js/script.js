@@ -145,10 +145,18 @@ class Rhomb extends Figure {
 }
 // Обробка подій для кнопок малювання
 // Збереження ID поза класом
-let activeInterval = null;
-function stopActiveInterval() {
-    if (activeInterval) {
-        clearInterval(activeInterval);
+let activeIntervalCircle = null;
+let activeIntervalRect = null;
+let activeIntervalRhomb = null;
+function stopActiveInterval(param) {
+    if (param === 0 && activeIntervalCircle) {
+        clearInterval(activeIntervalCircle);
+    }
+    if (param === 1 && activeIntervalRect) {
+        clearInterval(activeIntervalRect);
+    }
+    if (param === 2 && activeIntervalRhomb) {
+        clearInterval(activeIntervalRhomb);
     }
 }
 const drawCircleBtn = document.querySelector(".header__circle-draw");
@@ -157,25 +165,25 @@ const drawRhombBtn = document.querySelector(".header__rhomb-draw");
 drawCircleBtn.addEventListener("click", event => {
     const input = document.querySelector(".header__circle-input");
     const value = Number(input.value);
-    stopActiveInterval();
+    stopActiveInterval(0);
     const circle = new Circle(value);
     circle.HideDrawingBackGround();
     circle.DrawBlack();
     const checkbox = document.querySelector(".header__circle-check");
     if (checkbox.checked) {
-        activeInterval = circle.MoveRight();
+        activeIntervalCircle = circle.MoveRight();
     }
 });
 drawSquareBtn.addEventListener("click", event => {
     const input = document.querySelector(".header__square-input");
     const value = Number(input.value);
-    stopActiveInterval();
+    stopActiveInterval(1);
     const square = new Square(value);
     square.HideDrawingBackGround();
     square.DrawBlack();
     const checkbox = document.querySelector(".header__square-check");
     if (checkbox.checked) {
-        activeInterval = square.MoveRight();
+        activeIntervalRect = square.MoveRight();
     }
 });
 drawRhombBtn.addEventListener("click", event => {
@@ -183,13 +191,13 @@ drawRhombBtn.addEventListener("click", event => {
     const arrOfDiag = inputHor.value.trim().split(",");
     const horDiagLen = Number(arrOfDiag[0]);
     const vertDiagLen = Number(arrOfDiag[1]);
-    stopActiveInterval();
+    stopActiveInterval(2);
     const rhomb = new Rhomb(horDiagLen, vertDiagLen);
     rhomb.HideDrawingBackGround();
     rhomb.DrawBlack();
     const checkbox = document.querySelector(".header__rhomb-check");
     if (checkbox.checked) {
-        activeInterval = rhomb.MoveRight();
+        activeIntervalRhomb = rhomb.MoveRight();
     }
 });
 //# sourceMappingURL=script.js.map

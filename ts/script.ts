@@ -178,11 +178,19 @@ class Rhomb extends Figure {
 
 // Обробка подій для кнопок малювання
 // Збереження ID поза класом
-let activeInterval: any = null;
+let activeIntervalCircle: any = null;
+let activeIntervalRect: any = null;
+let activeIntervalRhomb: any = null;
 
-function stopActiveInterval(): void {
-    if (activeInterval) {
-        clearInterval(activeInterval);
+function stopActiveInterval(param: number): void {
+    if (param === 0 && activeIntervalCircle) {
+        clearInterval(activeIntervalCircle);
+    }
+    if (param === 1 && activeIntervalRect) {
+        clearInterval(activeIntervalRect);
+    }
+    if (param === 2 && activeIntervalRhomb) {
+        clearInterval(activeIntervalRhomb);
     }
 }
 
@@ -194,7 +202,7 @@ drawCircleBtn.addEventListener("click", event => {
     const input = document.querySelector(".header__circle-input") as HTMLInputElement;
     const value: number = Number(input.value);
 
-    stopActiveInterval();
+    stopActiveInterval(0);
 
     const circle = new Circle(value);
     circle.HideDrawingBackGround();
@@ -202,7 +210,7 @@ drawCircleBtn.addEventListener("click", event => {
 
     const checkbox = document.querySelector(".header__circle-check") as HTMLInputElement;
     if (checkbox.checked) {
-        activeInterval = circle.MoveRight();
+        activeIntervalCircle = circle.MoveRight();
     }
 });
 
@@ -210,7 +218,7 @@ drawSquareBtn.addEventListener("click", event => {
     const input = document.querySelector(".header__square-input") as HTMLInputElement;
     const value: number = Number(input.value);
 
-    stopActiveInterval();
+    stopActiveInterval(1);
 
     const square = new Square(value);
     square.HideDrawingBackGround();
@@ -218,7 +226,7 @@ drawSquareBtn.addEventListener("click", event => {
 
     const checkbox = document.querySelector(".header__square-check") as HTMLInputElement;
     if (checkbox.checked) {
-        activeInterval = square.MoveRight();
+        activeIntervalRect = square.MoveRight();
     }
 });
 
@@ -228,7 +236,7 @@ drawRhombBtn.addEventListener("click", event => {
     const horDiagLen: number = Number(arrOfDiag[0]);
     const vertDiagLen: number = Number(arrOfDiag[1]);
 
-    stopActiveInterval();
+    stopActiveInterval(2);
 
     const rhomb = new Rhomb(horDiagLen, vertDiagLen);
     rhomb.HideDrawingBackGround();
@@ -236,6 +244,6 @@ drawRhombBtn.addEventListener("click", event => {
 
     const checkbox = document.querySelector(".header__rhomb-check") as HTMLInputElement;
     if (checkbox.checked) {
-        activeInterval = rhomb.MoveRight();
+        activeIntervalRhomb = rhomb.MoveRight();
     }
 });
