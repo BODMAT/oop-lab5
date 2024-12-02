@@ -19,6 +19,7 @@ class Figure {
             }
             this.DrawBlack();
         }, delay);
+        return interval; //ID интервала
     }
     //============================
     get xCenter() {
@@ -143,29 +144,38 @@ class Rhomb extends Figure {
     }
 }
 // Обробка подій для кнопок малювання
+// Збереження ID поза класом
+let activeInterval = null;
+function stopActiveInterval() {
+    if (activeInterval) {
+        clearInterval(activeInterval);
+    }
+}
 const drawCircleBtn = document.querySelector(".header__circle-draw");
 const drawSquareBtn = document.querySelector(".header__square-draw");
 const drawRhombBtn = document.querySelector(".header__rhomb-draw");
 drawCircleBtn.addEventListener("click", event => {
     const input = document.querySelector(".header__circle-input");
     const value = Number(input.value);
+    stopActiveInterval();
     const circle = new Circle(value);
     circle.HideDrawingBackGround();
     circle.DrawBlack();
     const checkbox = document.querySelector(".header__circle-check");
     if (checkbox.checked) {
-        circle.MoveRight();
+        activeInterval = circle.MoveRight();
     }
 });
 drawSquareBtn.addEventListener("click", event => {
     const input = document.querySelector(".header__square-input");
     const value = Number(input.value);
+    stopActiveInterval();
     const square = new Square(value);
     square.HideDrawingBackGround();
     square.DrawBlack();
     const checkbox = document.querySelector(".header__square-check");
     if (checkbox.checked) {
-        square.MoveRight();
+        activeInterval = square.MoveRight();
     }
 });
 drawRhombBtn.addEventListener("click", event => {
@@ -173,12 +183,13 @@ drawRhombBtn.addEventListener("click", event => {
     const arrOfDiag = inputHor.value.trim().split(",");
     const horDiagLen = Number(arrOfDiag[0]);
     const vertDiagLen = Number(arrOfDiag[1]);
+    stopActiveInterval();
     const rhomb = new Rhomb(horDiagLen, vertDiagLen);
     rhomb.HideDrawingBackGround();
     rhomb.DrawBlack();
     const checkbox = document.querySelector(".header__rhomb-check");
     if (checkbox.checked) {
-        rhomb.MoveRight();
+        activeInterval = rhomb.MoveRight();
     }
 });
 //# sourceMappingURL=script.js.map
